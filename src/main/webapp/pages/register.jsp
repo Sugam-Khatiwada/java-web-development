@@ -11,6 +11,14 @@
 </head>
 <body>
 
+<% 
+    String errorMessage = (String) request.getAttribute("errorMessage");
+%>
+
+<%=
+    errorMessage
+%>
+
 <!-- Form starts here -->
 <!-- action="/register" → matches your servlet URL -->
 <!-- method="post" → used to send data securely -->
