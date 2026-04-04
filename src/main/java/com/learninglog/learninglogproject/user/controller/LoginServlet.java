@@ -45,8 +45,9 @@ public class LoginServlet extends HttpServlet {
             }
         }
         catch(Exception e){
-
-        }
+            req.setAttribute("error", e.getMessage());
+            req.getRequestDispatcher("pages/login.jsp").forward(req, resp);
+            }
 
     }
 }
