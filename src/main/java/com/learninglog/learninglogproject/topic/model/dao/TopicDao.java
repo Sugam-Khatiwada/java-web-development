@@ -2,8 +2,13 @@ package com.learninglog.learninglogproject.topic.model.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
+
+import com.learninglog.learninglogproject.topic.model.Topic;
 import com.learninglog.learninglogproject.utils.DbConnection;
 
 public class TopicDao {
@@ -22,6 +27,26 @@ public class TopicDao {
                 return false;
             }
             }
-        
+    }
+
+    public static List<Topic> fetchTopics() throws SQLException{
+        String query = "SELECT * FROM topics";
+        try(Connection conn = DbConnection.getConnection();
+            PreparedStatement st = conn.prepareStatement(query)){
+            // execute query and fetch data
+            // create list of topics and return
+            ResultSet rs = st.executeQuery();  
+            List<Topic> topicList = new ArrayList<>();
+            while (rs.next()){
+                int id = rs.getInt(1);
+                String name = rs.getString(2);
+                int userId = rs.getInt(3);
+                Timestamp createdDate = rs.getTimestamp(4);
+                Topic obj = new Topic(id, name, userId, createdDate);
+                topicList.add(obj);
+            }
+            return topicList;
+        }
     }
 }
+
