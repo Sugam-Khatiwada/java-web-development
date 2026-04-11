@@ -9,7 +9,7 @@
 </head>
 <body>
 <%
-    String errorMsg = (String) req.getAttribute("error");
+    String errorMsg = (String) request.getAttribute("error");
     if(errorMsg==null){
         errorMsg="";
     }
