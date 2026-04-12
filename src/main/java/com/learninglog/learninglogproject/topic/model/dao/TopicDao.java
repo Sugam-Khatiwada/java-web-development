@@ -13,7 +13,7 @@ import com.learninglog.learninglogproject.utils.DbConnection;
 
 public class TopicDao {
     public boolean insertTopic(String name, int userId, Timestamp createdAt) throws SQLException{
-        String query = "INSERT INTO topics (name, user_id, created_at) VALUES (?, ?, ?)";
+        String query = "INSERT INTO topic (name, user_id, createdDate) VALUES (?, ?, ?)";
         try(Connection conn = DbConnection.getConnection();
             PreparedStatement st = conn.prepareStatement(query)){
                 st.setString(1, name);
@@ -30,7 +30,7 @@ public class TopicDao {
     }
 
     public static List<Topic> fetchTopics() throws SQLException{
-        String query = "SELECT * FROM topics";
+        String query = "SELECT * FROM topic";
         try(Connection conn = DbConnection.getConnection();
             PreparedStatement st = conn.prepareStatement(query)){
             // execute query and fetch data
@@ -40,13 +40,15 @@ public class TopicDao {
             while (rs.next()){
                 int id = rs.getInt(1);
                 String name = rs.getString(2);
-                int userId = rs.getInt(3);
-                Timestamp createdDate = rs.getTimestamp(4);
+                int userId = rs.getInt(5);
+                Timestamp createdDate = rs.getTimestamp(3);
                 Topic obj = new Topic(id, name, userId, createdDate);
                 topicList.add(obj);
             }
             return topicList;
         }
     }
-}
+
+    public Topic fetchTopicById(int id) throws SQLException{
+        }
 
