@@ -33,6 +33,13 @@ public class TopicServlet extends  HttpServlet{
             // then send data to topic-list.jsp
             req.getRequestDispatcher("pages/topic-list.jsp").forward(req, resp);
         }
+        if("edit".equals(page)){
+            int topicId = Integer.parseInt(req.getParameter("id"));
+            // fetch topic details from dao using topic id
+            
+            // set topic details in request attribute and forward to edit-topic.jsp
+
+        }
         req.getRequestDispatcher("pages/add-topic.jsp").forward(req, resp);
     }
 @Override
