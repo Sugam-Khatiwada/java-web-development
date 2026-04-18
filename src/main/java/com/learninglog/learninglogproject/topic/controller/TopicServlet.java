@@ -36,11 +36,23 @@ public class TopicServlet extends  HttpServlet{
         if("edit".equals(page)){
             int topicId = Integer.parseInt(req.getParameter("id"));
             // fetch topic details from dao using topic id
-            
-            // set topic details in request attribute and forward to edit-topic.jsp
-
+            try{
+                TopicDao topicDao = new TopicDao();
+                Topic topic = topicDao.fetchTopicById(topicId);
+                // set topic details in request attribute and forward to edit-topic.jsp
+                if(topic != null){
+                    req.setAttribute("topic", topic);
+                    // req.getRequestDispatcher("pages/edit-topic.jsp").forward(req, resp);
+                }
+                else{
+                    req.setAttribute("error", "Topic not found.");
+                }
+            }
+            catch(Exception e){
+                req.setAttribute("error", "Something went wrong while fetching topic details."+e.getMessage());
+            }
+            req.getRequestDispatcher("pages/edit-topic.jsp").forward(req, resp);
         }
-        req.getRequestDispatcher("pages/add-topic.jsp").forward(req, resp);
     }
 @Override
 protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -65,9 +77,10 @@ protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws S
             req.setAttribute("error", e.getMessage());
             req.getRequestDispatcher("pages/add-topic.jsp").forward(req, resp);
         }
-
-}
-else if(action.equals("edit")){
+    }
+    else if("edit".equals(action)){
+        int id = Integer.parseInt(req.getParameter("id"));
+        String updatedName = req.getParameter("topic-name");
 }
 }
 }
