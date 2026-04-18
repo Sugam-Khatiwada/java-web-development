@@ -50,5 +50,38 @@ public class TopicDao {
     }
 
     public Topic fetchTopicById(int id) throws SQLException{
+        String query = "SELECT * FROM topic WHERE id = ?";
+        try(Connection conn = DbConnection.getConnection();
+            PreparedStatement st = conn.prepareStatement(query)){
+            st.setInt(1, id);
+            ResultSet rs = st.executeQuery();
+            if (rs.next()) {
+                String name = rs.getString(2);
+                int userId = rs.getInt(5);
+                Timestamp createdDate = rs.getTimestamp(3);
+               Topic obj =new Topic(id, name, userId, createdDate);
+               return obj;
+            }
+            else{
+                return null;
+            }
         }
+    }
+
+    public boolean updateTopic(int id, String name) throws SQLException{
+        String query = "UPDATE topic SET name = ? WHERE id = ?";
+        try(Connection conn = DbConnection.getConnection();
+            PreparedStatement st = conn.prepareStatement(query)){
+            st.setString(1, name);
+            st.setInt(2, id);
+            int updatedRows = st.executeUpdate();
+            if(updatedRows > 0){
+                return true;
+            }
+            else{
+                return false;
+            }
+        }
+    }
+}
 
