@@ -83,5 +83,21 @@ public class TopicDao {
             }
         }
     }
+
+     public static boolean deleteTopic(int id) throws SQLException{
+        String  query= "DELETE FROM topic WHERE id = ?";
+        try(Connection conn = DbConnection.getConnection();
+        PreparedStatement st = conn.prepareStatement(query)){
+            st.setInt(1, id);
+            int rowsDeleted = st.executeUpdate();
+            if(rowsDeleted>0)
+            {
+                return  true;
+            }
+            else {
+                return false;
+            }
+        }
+    }
 }
 
