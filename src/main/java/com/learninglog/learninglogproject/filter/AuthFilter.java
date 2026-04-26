@@ -27,11 +27,12 @@ public class AuthFilter implements Filter{
 
         boolean isLoginPageOrRegisterPage = uri.contains("login") || uri.contains("register");
 
+        boolean isStaticFile = uri.contains("/images/") || uri.contains("/css/") || uri.contains("/js/");
         if(isLoggedIn && isLoginPageOrRegisterPage){
             httpResponse.sendRedirect("/");
             return;
         }
-        if(isLoggedIn || isLoginPageOrRegisterPage){
+        if(isLoggedIn || isLoginPageOrRegisterPage || isStaticFile){
             chain.doFilter(request, response);
         }else {
             httpResponse.sendRedirect("/login");
