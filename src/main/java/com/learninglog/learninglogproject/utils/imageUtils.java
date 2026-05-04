@@ -6,6 +6,9 @@ import java.io.IOException;
 import jakarta.servlet.http.Part;
 
 public class imageUtils {
+    /**
+     * Writes the uploaded image part to the target directory and returns the relative path.
+     */
     public static String writeImage(Part imagePart) throws IOException {
         String uploadDir = "C:\\Users\\Acer\\Random projects\\learninglog\\src\\main\\webapp\\images";
         
